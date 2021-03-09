@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Timetracker.Models;
 
@@ -8,6 +9,7 @@ namespace Timetracker.ViewModels
     {
         bool IsBusy { get; }
         List<JobItem> JobItems { get; }
+        List<string> JobTypes { get; set; }
 
         JobItem JobItem { get; set; }
 

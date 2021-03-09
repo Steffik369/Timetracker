@@ -9,6 +9,29 @@
 
 @code {
 
-    
+    protected override async Task OnInitializedAsync()
+    {
+        timetrackerViewModel.PropertyChanged += async (sender, e) =>
+        {
+            await InvokeAsync(() =>
+            {
+                StateHasChanged();
+            });
+        };
+        await base.OnInitializedAsync();
+    }
+
+    async void OnPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+    {
+        await InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        timetrackerViewModel.PropertyChanged -= OnPropertyChangedHandler;
+    }
 }
 

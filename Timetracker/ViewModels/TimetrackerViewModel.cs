@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Timetracker.Models;
 using Timetracker.Repository;
 
 namespace Timetracker.ViewModels
 {
-    public class TimetrackerViewModel : ITimetrackerViewModel
+    public class TimetrackerViewModel : INotifyPropertyChanged, ITimetrackerViewModel
     {
         private ITimetrackerRepository timetrackerRepository;
 
@@ -29,6 +30,17 @@ namespace Timetracker.ViewModels
             private set
             {
                 jobItems = value;
+                //OnPropertyChanged();
+            }
+        }
+
+        private List<string> jobTypes = Enum.GetValues(typeof(JobType)).Cast<JobType>().Select(v => v.ToString()).ToList();
+        public List<string> JobTypes
+        {
+            get => jobTypes;
+            set
+            {
+                jobTypes = value;
                 OnPropertyChanged();
             }
         }
@@ -48,7 +60,7 @@ namespace Timetracker.ViewModels
         public TimetrackerViewModel(ITimetrackerRepository repository)
         {
             this.timetrackerRepository = repository;
-            //GetJobItems();
+            GetJobItems();
         }
 
         public void DeleteJobItem(JobItem jobItem)
@@ -57,6 +69,8 @@ namespace Timetracker.ViewModels
             
             isBusy = true;
             timetrackerRepository.DeleteItemAsync(jobItem);
+
+            GetJobItems();
             isBusy = false;
         }
 
@@ -89,6 +103,7 @@ namespace Timetracker.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

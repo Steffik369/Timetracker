@@ -1,5 +1,45 @@
-﻿<h3>TimetrackerAddComponent</h3>
+﻿@inject NavigationManager NavManager 
 
-@code {
+<Form Layout="Inline"
+      Model="@timetrackerViewModel.JobItem"
+      OnFinish="OnFinish">
 
+    <FormItem Label="Title">
+        <Input @bind-Value="@context.Title" />
+    </FormItem>
+
+    <FormItem Label="Type">
+        <AutoComplete @bind-Value="@context.Type" Options="@timetrackerViewModel.JobTypes" />
+    </FormItem>
+
+    <FormItem Label="Start">
+        <TimePicker @bind-Value="@context.Start" Format='@("HH:mm")' />
+    </FormItem>
+    <FormItem Label="End">
+        <TimePicker @bind-Value="@context.End" Format='@("HH:mm")' />
+    </FormItem>
+    <FormItem>
+        <Button OnClick="()=>timetrackerViewModel.JobItem = new JobItem()">
+            Clean
+        </Button>
+    </FormItem>
+
+    <FormItem>
+        <Button Type="@ButtonType.Primary" HtmlType="submit">
+            Save
+        </Button>
+    </FormItem>
+</Form>
+
+
+@code
+{
+    [CascadingParameter(Name = "timetrackerViewModel")]
+    ITimetrackerViewModel? timetrackerViewModel { get; set; }
+
+    private void OnFinish(EditContext editContext)
+    {
+        timetrackerViewModel.SaveJobItem(timetrackerViewModel.JobItem);
+        NavManager.NavigateTo("timetrackerPage", forceLoad: true);
+    }
 }

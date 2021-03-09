@@ -1,8 +1,38 @@
-﻿<h3>TimetrackerTableComponent</h3>
-
-
+﻿
+<Table @ref="table"
+       TItem="JobItem"
+       DataSource="@timetrackerViewModel.JobItems"
+       Total="_total"
+       @bind-PageIndex="_pageIndex"
+       @bind-PageSize="_pageSize">
+    <Column @bind-Field="@context.Title" Sortable />
+    <Column @bind-Field="@context.Type" Sortable />
+    <Column @bind-Field="@context.Start" Format="yyyy-MM-dd HH:mm:ss" Sortable />
+    <Column @bind-Field="@context.End" Format="yyyy-MM-dd HH:mm:ss" Sortable />
+    @*<Column Title="Total time" Field="@context.ElapsedTime" />*@
+    <ActionColumn>
+        <Space>
+            <SpaceItem><Button OnClick="()=>timetrackerViewModel.JobItem = context">Edit</Button></SpaceItem>
+            <SpaceItem><Button Danger OnClick="()=>timetrackerViewModel.DeleteJobItem(context)">Delete</Button></SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>
 
 
 @code {
+
+    [CascadingParameter(Name = "timetrackerViewModel")]
+    ITimetrackerViewModel? timetrackerViewModel { get; set; }
+
+    ITable table;
+
+    int _pageIndex = 1;
+    int _pageSize = 10;
+    int _total = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _total = timetrackerViewModel.JobItems.Count();
+    }
 
 }
