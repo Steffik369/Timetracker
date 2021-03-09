@@ -2,9 +2,9 @@
 <Table @ref="table"
        TItem="JobItem"
        DataSource="@timetrackerViewModel.JobItems"
-       Total="_total"
-       @bind-PageIndex="_pageIndex"
-       @bind-PageSize="_pageSize">
+       Total="total"
+       @bind-PageIndex="pageIndex"
+       @bind-PageSize="pageSize">
     <Column @bind-Field="@context.Title" Sortable />
     <Column @bind-Field="@context.Type" Sortable />
     <Column @bind-Field="@context.Start" Format="yyyy-MM-dd HH:mm:ss" Sortable />
@@ -18,6 +18,18 @@
     </ActionColumn>
 </Table>
 
+<div>
+    Total: @total | Page size:
+    <select class="form-select" aria-label="Default select example" @bind="pageSize">
+        @foreach (var type in numberOfPages)
+        {
+            <option>@type</option>
+        }
+    </select>
+</div>
+
+
+
 
 @code {
 
@@ -26,13 +38,21 @@
 
     ITable table;
 
-    int _pageIndex = 1;
-    int _pageSize = 10;
-    int _total = 0;
+    int pageIndex = 1;
+    int pageSize = 10;
+    int total = 0;
+
+    List<int> numberOfPages = new List<int>() { 5, 10, 20, 50, 100 };
 
     protected override async Task OnInitializedAsync()
     {
-        _total = timetrackerViewModel.JobItems.Count();
+        total = timetrackerViewModel.JobItems.Count();
     }
 
 }
+
+<style>
+    .form-select {
+        width: 50px;
+    }
+</style>
