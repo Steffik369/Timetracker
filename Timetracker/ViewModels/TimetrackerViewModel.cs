@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Timetracker.Models;
+using Timetracker.Repository;
 
 namespace Timetracker.ViewModels
 {
     public class TimetrackerViewModel : ITimetrackerViewModel
     {
-        public TimetrackerViewModel()
-        {
-        }
+        private ITimetrackerRepository timetrackerRepository;
 
         private bool isBusy = false;
         public bool IsBusy 
@@ -46,20 +45,47 @@ namespace Timetracker.ViewModels
             }
         }
 
+        public TimetrackerViewModel(ITimetrackerRepository repository)
+        {
+            this.timetrackerRepository = repository;
+            GetJobItems();
+        }
 
         public void DeleteJobItem(JobItem jobItem)
         {
-            throw new NotImplementedException();
+            if (jobItem is null) throw new ArgumentNullException(nameof(jobItem), "Given item is NULL!");
+            
+            isBusy = true;
+            timetrackerRepository.DeleteItemAsync(jobItem);
+            isBusy = false;
         }
 
         public void GetJobItems()
         {
-            throw new NotImplementedException();
+            IsBusy = true;
+            JobItems = timetrackerRepository.GetItemsAsync().Result;
+            IsBusy = false;
         }
 
         public void SaveJobItem(JobItem jobItem)
         {
-            throw new NotImplementedException();
+            if (jobItem is null) throw new ArgumentNullException(nameof(jobItem), "Given item is NULL!");
+
+            IsBusy = true;
+
+            if (jobItem.Id.Equals(Guid.Empty))
+            {
+                jobItem.Id = Guid.NewGuid();
+                timetrackerRepository.AddItemAsync(jobItem);
+            }
+            else
+            {
+                timetrackerRepository.UpdateItemAsync(jobItem);
+            }
+
+            GetJobItems();
+
+            IsBusy = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

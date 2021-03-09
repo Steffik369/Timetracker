@@ -6,7 +6,7 @@ using Timetracker.Models;
 
 namespace Timetracker.Repository
 {
-    interface ITimetrackerRepository : IDisposable
+    public interface ITimetrackerRepository : IDisposable
     {
         Task AddItemAsync(JobItem jobItem);
 
