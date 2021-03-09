@@ -78,8 +78,6 @@ namespace Timetracker.ViewModels
         {
             IsBusy = true;
             JobItems = timetrackerRepository.GetItemsAsync().Result;
-
-            RefreshJobTypeList();
             IsBusy = false;
         }
 
@@ -105,13 +103,6 @@ namespace Timetracker.ViewModels
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private void RefreshJobTypeList()
-        {
-            List<string> originalList = Enum.GetValues(typeof(JobType)).Cast<JobType>().Select(v => v.ToString()).ToList();
-            List<string> notIncludedJobTypes = JobItems.Select(item => item.Type).Except(originalList).ToList();
-            JobTypes = originalList.Union(notIncludedJobTypes).Distinct().ToList();
-        }
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
