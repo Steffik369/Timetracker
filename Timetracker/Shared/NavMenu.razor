@@ -1,4 +1,6 @@
 ﻿<Menu Theme="MenuTheme.Dark" Mode="MenuMode.Horizontal" DefaultSelectedKeys=@(new[]{"home"})>
+    <h4 class="navHeader">Timetracker</h4>
+
     <MenuItem Key="home" class="menuItem">
         <Icon Type="home" Theme="outline" />
         Home
@@ -11,3 +13,24 @@
 
     </MenuItem>
 </Menu>
+
+<style>
+
+    .ant-menu-item {
+        top: 0px;
+        height: 64px;
+    }
+
+    .icon{
+        font-size: 20px;
+        margin-top: -7px;
+    }
+
+    .navHeader {
+        color: white;
+        float: left;
+        padding-top: 15px;
+        padding-right: 20px;
+        margin-left: -25px;
+    }
+</style>
