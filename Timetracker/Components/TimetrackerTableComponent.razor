@@ -22,9 +22,9 @@
 <div>
     Total: @total | Page size:
     <select class="form-select" aria-label="Default select example" @bind="pageSize">
-        @foreach (var type in numberOfPages)
+        @foreach (var size in pageSizes)
         {
-            <option>@type</option>
+            <option>@size</option>
         }
     </select>
 </div>
@@ -41,7 +41,7 @@
     int pageSize = 10;
     int total = 0;
 
-    List<int> numberOfPages = new List<int>() { 5, 10, 20, 50, 100 };
+    List<int> pageSizes = new List<int>() { 5, 10, 20, 50, 100 };
 
     protected override async Task OnInitializedAsync()
     {
