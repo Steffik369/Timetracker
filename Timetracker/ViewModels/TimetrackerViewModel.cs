@@ -30,7 +30,7 @@ namespace Timetracker.ViewModels
             private set
             {
                 jobItems = value;
-                //OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 

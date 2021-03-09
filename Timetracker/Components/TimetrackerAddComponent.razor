@@ -55,7 +55,14 @@
             return;
         }
 
-        timetrackerViewModel.SaveJobItem(timetrackerViewModel.JobItem);
-        NavManager.NavigateTo("timetrackerPage", forceLoad: true);
+        try
+        {
+            timetrackerViewModel.SaveJobItem(timetrackerViewModel.JobItem);
+            NavManager.NavigateTo("timetrackerPage", forceLoad: true);
+        }
+        catch(ArgumentNullException ex)
+        {
+            await _message.Error($"Error: {ex.Message}");
+        }
     }
 }
