@@ -1,4 +1,5 @@
-﻿
+﻿@inject MessageService _message
+
 <Table @ref="table"
        TItem="JobItem"
        DataSource="@timetrackerViewModel.JobItems"
@@ -13,7 +14,7 @@
     <ActionColumn>
         <Space>
             <SpaceItem><Button OnClick="() => timetrackerViewModel.JobItem = context" Disabled="@timetrackerViewModel.IsBusy">Edit</Button></SpaceItem>
-            <SpaceItem><Button Danger OnClick="() => timetrackerViewModel.DeleteJobItem(context)" Disabled="@timetrackerViewModel.IsBusy">Delete</Button></SpaceItem>
+            <SpaceItem><Button Danger OnClick="() => DeleteItem(context)" Disabled="@timetrackerViewModel.IsBusy">Delete</Button></SpaceItem>
         </Space>
     </ActionColumn>
 </Table>
@@ -49,6 +50,17 @@
         total = timetrackerViewModel.JobItems.Count();
     }
 
+    private async void DeleteItem(JobItem item)
+    {
+        try
+        {
+            timetrackerViewModel.DeleteJobItem(item);
+        }
+        catch (ArgumentNullException ex)
+        {
+            await _message.Error($"Error: {ex.Message}");
+        }
+    }
 }
 
 <style>
