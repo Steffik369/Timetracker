@@ -10,7 +10,6 @@ namespace Timetracker.ViewModels
     {
         public TimetrackerViewModel()
         {
-
         }
 
         private bool isBusy = false;
@@ -36,6 +35,7 @@ namespace Timetracker.ViewModels
         }
 
         private JobItem jobItem = new JobItem();
+
         public JobItem JobItem 
         { 
             get => jobItem;
@@ -67,6 +67,5 @@ namespace Timetracker.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
     }
 }
