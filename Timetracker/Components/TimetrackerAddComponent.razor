@@ -14,15 +14,12 @@
     </FormItem>
 
     <FormItem Label="Start">
-        <DatePicker @bind-Value="@context.Start" DisabledDate="date => date > timetrackerViewModel.JobItem.End?.Date" ShowTime='@true' Format='@("yyyy-MM-dd HH:mm")' />
+        <DatePicker @bind-Value="@context.Start" DisabledDate="date => date > timetrackerViewModel.JobItem.End?.Date" ShowTime='@("HH:mm")' Format='@("yyyy-MM-dd HH:mm")' />
     </FormItem>
     <FormItem Label="End">
-        <DatePicker @bind-Value="@context.End" DisabledDate="date => date < timetrackerViewModel.JobItem.Start?.Date" ShowTime='@true' Format='@("yyyy-MM-dd HH:mm")' />
+        <DatePicker @bind-Value="@context.End" DisabledDate="date => date < timetrackerViewModel.JobItem.Start?.Date" ShowTime='@("HH:mm")' Format='@("yyyy-MM-dd HH:mm")' />
     </FormItem>
 
-    @*<FormItem Label="Start-End">
-            <RangePicker TValue="DateTime?[]" ShowTime='@true' DisabledDate="date => date <= DateTime.Now" DefaultValue="new DateTime?[] { context.Start, context.End }"/>
-        </FormItem>*@
     <FormItem>
         <Button OnClick="()=>timetrackerViewModel.JobItem = new JobItem()" Disabled="@timetrackerViewModel.IsBusy">
             Clean
