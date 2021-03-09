@@ -1,15 +1,24 @@
 ﻿@inherits LayoutComponentBase
+@using AntDesign
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+<Layout Style="min-height: 100vh; ">
+    <Layout Class="layout">
+        <Header>
+            <NavMenu/>
+        </Header>
 
-<div class="main">
-    <div class="top-row px-4">
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>
+        <Content Style="padding: 0 50px;">
+            <div class="site-layout-content">@Body</div>
+        </Content>
+        <Footer Style="text-align: center; ">Timetracker ©2021 Created by Zbyněk Novák</Footer>
+    </Layout>
+</Layout>
 
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+<style>
+    .site-layout-content {
+        background: #fff;
+        padding: 24px;
+        min-height: 280px;
+    }
+
+</style>

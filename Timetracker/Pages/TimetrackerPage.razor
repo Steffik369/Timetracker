@@ -1,0 +1,14 @@
+﻿@page "/timetrackerPage"
+@using System.ComponentModel
+@inject ITimetrackerViewModel timetrackerViewModel
+
+<CascadingValue Value=@timetrackerViewModel Name="timetrackerViewModel">
+    <Timetracker.Components.TimetrackerAddComponent />
+    <Timetracker.Components.TimetrackerTableComponent />
+</CascadingValue>
+
+@code {
+
+    
+}
+

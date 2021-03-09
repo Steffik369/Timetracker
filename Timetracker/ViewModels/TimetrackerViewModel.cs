@@ -48,7 +48,7 @@ namespace Timetracker.ViewModels
         public TimetrackerViewModel(ITimetrackerRepository repository)
         {
             this.timetrackerRepository = repository;
-            GetJobItems();
+            //GetJobItems();
         }
 
         public void DeleteJobItem(JobItem jobItem)
