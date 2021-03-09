@@ -12,8 +12,8 @@
     @*<Column Title="Total time" Field="@context.ElapsedTime" />*@
     <ActionColumn>
         <Space>
-            <SpaceItem><Button OnClick="()=>timetrackerViewModel.JobItem = context">Edit</Button></SpaceItem>
-            <SpaceItem><Button Danger OnClick="()=>timetrackerViewModel.DeleteJobItem(context)">Delete</Button></SpaceItem>
+            <SpaceItem><Button OnClick="() => timetrackerViewModel.JobItem = context" Disabled="@timetrackerViewModel.IsBusy">Edit</Button></SpaceItem>
+            <SpaceItem><Button Danger OnClick="() => timetrackerViewModel.DeleteJobItem(context)" Disabled="@timetrackerViewModel.IsBusy">Delete</Button></SpaceItem>
         </Space>
     </ActionColumn>
 </Table>

@@ -19,13 +19,13 @@
         <TimePicker @bind-Value="@context.End" Format='@("HH:mm")' />
     </FormItem>
     <FormItem>
-        <Button OnClick="()=>timetrackerViewModel.JobItem = new JobItem()">
+        <Button OnClick="()=>timetrackerViewModel.JobItem = new JobItem()" Disabled="@timetrackerViewModel.IsBusy">
             Clean
         </Button>
     </FormItem>
 
     <FormItem>
-        <Button Type="@ButtonType.Primary" HtmlType="submit">
+        <Button Type="@ButtonType.Primary" HtmlType="submit" Disabled="@timetrackerViewModel.IsBusy">
             Save
         </Button>
     </FormItem>
