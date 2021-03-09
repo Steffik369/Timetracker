@@ -35,6 +35,8 @@ namespace Timetracker
             services.AddDbContext<TimetrackerDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<ITimetrackerRepository, SQLiteRepository>();
             services.AddScoped<ITimetrackerViewModel, TimetrackerViewModel>();
+            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

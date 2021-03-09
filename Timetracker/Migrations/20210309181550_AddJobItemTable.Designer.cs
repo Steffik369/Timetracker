@@ -9,7 +9,7 @@ using Timetracker.Repository;
 namespace Timetracker.Migrations
 {
     [DbContext(typeof(TimetrackerDbContext))]
-    [Migration("20210309132400_AddJobItemTable")]
+    [Migration("20210309181550_AddJobItemTable")]
     partial class AddJobItemTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,9 +25,11 @@ namespace Timetracker.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("End")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("Start")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")

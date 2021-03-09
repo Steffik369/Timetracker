@@ -14,8 +14,8 @@ namespace Timetracker.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Start = table.Column<DateTime>(type: "TEXT", nullable: true),
-                    End = table.Column<DateTime>(type: "TEXT", nullable: true)
+                    Start = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    End = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

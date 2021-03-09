@@ -23,9 +23,11 @@ namespace Timetracker.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("End")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime?>("Start")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
