@@ -1,4 +1,5 @@
-﻿@inject NavigationManager NavManager 
+﻿@inject NavigationManager NavManager
+@inject MessageService _message
 
 <Form Layout="Inline"
       Model="@timetrackerViewModel.JobItem"
@@ -13,11 +14,15 @@
     </FormItem>
 
     <FormItem Label="Start">
-        <TimePicker @bind-Value="@context.Start" Format='@("HH:mm")' />
+        <DatePicker @bind-Value="@context.Start" DisabledDate="date => date > timetrackerViewModel.JobItem.End?.Date" ShowTime='@true' Format='@("yyyy-MM-dd HH:mm")' />
     </FormItem>
     <FormItem Label="End">
-        <TimePicker @bind-Value="@context.End" Format='@("HH:mm")' />
+        <DatePicker @bind-Value="@context.End" DisabledDate="date => date < timetrackerViewModel.JobItem.Start?.Date" ShowTime='@true' Format='@("yyyy-MM-dd HH:mm")' />
     </FormItem>
+
+    @*<FormItem Label="Start-End">
+            <RangePicker TValue="DateTime?[]" ShowTime='@true' DisabledDate="date => date <= DateTime.Now" DefaultValue="new DateTime?[] { context.Start, context.End }"/>
+        </FormItem>*@
     <FormItem>
         <Button OnClick="()=>timetrackerViewModel.JobItem = new JobItem()" Disabled="@timetrackerViewModel.IsBusy">
             Clean
@@ -37,8 +42,22 @@
     [CascadingParameter(Name = "timetrackerViewModel")]
     ITimetrackerViewModel? timetrackerViewModel { get; set; }
 
-    private void OnFinish(EditContext editContext)
+    DateTime?[] dateTimes = new DateTime?[60];
+
+    private async void OnFinish(EditContext editContext)
     {
+        if (!(timetrackerViewModel.JobItem.End != null && timetrackerViewModel.JobItem.Start != null && (timetrackerViewModel.JobItem.End > timetrackerViewModel.JobItem.Start)))
+        {
+            await _message.Error("End time must be greater then Start time!");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(timetrackerViewModel.JobItem.Type))
+        {
+            await _message.Error("Type can't be empty");
+            return;
+        }
+
         timetrackerViewModel.SaveJobItem(timetrackerViewModel.JobItem);
         NavManager.NavigateTo("timetrackerPage", forceLoad: true);
     }
